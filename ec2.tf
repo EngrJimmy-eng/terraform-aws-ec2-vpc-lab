@@ -27,6 +27,6 @@ resource "aws_instance" "ec2" {
 iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   tags = {
-    Name = "Terraform-EC2"
+    Name = "terraform-ssm-ec2"
   }
 }
