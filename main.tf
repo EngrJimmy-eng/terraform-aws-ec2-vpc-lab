@@ -121,7 +121,7 @@ EC2 Instance
 
 resource "aws_instance" "web" {
 ami           = "ami-0c94855ba95c71c99"  # Ubuntu 22.04 in us-east-1, change if needed
-instance_type = "t2.micro"
+instance_type = "t3.micro"
 subnet_id     = aws_subnet.public_subnet.id
 security_groups = [aws_security_group.web_sg.name]
 key_name      = "my-keypair"  # Replace with your actual AWS keypair name
