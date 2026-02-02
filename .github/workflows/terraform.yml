@@ -1,50 +1,39 @@
-name: 'Terraform'
+name: Terraform Deploy
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  
-
-permissions:
-  contents: read
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    environment: production
 
-    # Pass AWS secrets as environment variables
     env:
+      AWS_REGION: eu-west-1
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
-      # Checkout repo
-      - name: Checkout
-        uses: actions/checkout@v4
+    # Checkout the repo
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Install Terraform CLI
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: latest
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    # Install Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.7.5  # or latest stable
 
-      # Initialize Terraform
-      - name: Terraform Init
-        run: terraform init
+    # Terraform init
+    - name: Terraform Init
+      run: terraform init
 
-      # Check Terraform formatting
-      - name: Terraform Format
-        run: terraform fmt -check
+    # Terraform plan
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
 
-      # Generate Terraform plan
-      - name: Terraform Plan
-        run: terraform plan -input=false
-
-      # Apply Terraform on push to main
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+    # Terraform apply
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
