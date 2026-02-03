@@ -3,14 +3,14 @@
 
 
 provider "aws" {
-region = "eu-west-1"  # Change to your preferred region
+region = "eu-west-1"  
 }
 
-======================
 
-VPC
 
-======================
+
+
+
 
 resource "aws_vpc" "my_vpc" {
 cidr_block           = "10.0.0.0/16"
@@ -22,11 +22,9 @@ Name = "my_custom_vpc"
 }
 }
 
-======================
 
-Public Subnet
 
-======================
+
 
 resource "aws_subnet" "public_subnet" {
 vpc_id                  = aws_vpc.my_vpc.id
@@ -38,11 +36,7 @@ Name = "my_public_subnet"
 }
 }
 
-======================
 
-Internet Gateway
-
-======================
 
 resource "aws_internet_gateway" "igw" {
 vpc_id = aws_vpc.my_vpc.id
@@ -52,11 +46,7 @@ Name = "my_igw"
 }
 }
 
-======================
 
-Route Table
-
-======================
 
 resource "aws_route_table" "public_rt" {
 vpc_id = aws_vpc.my_vpc.id
@@ -76,11 +66,7 @@ subnet_id      = aws_subnet.public_subnet.id
 route_table_id = aws_route_table.public_rt.id
 }
 
-======================
 
-Security Group
-
-======================
 
 resource "aws_security_group" "web_sg" {
 name        = "web_sg"
