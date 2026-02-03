@@ -1,4 +1,4 @@
-fresource "aws_iam_role" "ssm_role" {
+resource "aws_iam_role" "ssm_role" {
   name = "terraform-ec2-ssm-role"
 
   assume_role_policy = jsonencode({
