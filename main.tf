@@ -99,11 +99,7 @@ Name = "web_sg"
 }
 }
 
-======================
 
-EC2 Instance
-
-======================
 
 resource "aws_instance" "web" {
 ami           = "ami-0c94855ba95c71c99"  # Ubuntu 22.04 in us-east-1, change if needed
