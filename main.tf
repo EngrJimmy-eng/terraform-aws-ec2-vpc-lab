@@ -102,13 +102,13 @@ Name = "web_sg"
 
 
 resource "aws_instance" "web" {
-ami           = "ami-0c94855ba95c71c99"  # Ubuntu 22.04 in us-east-1, change if needed
-instance_type = "t3.micro"
-subnet_id     = aws_subnet.public_subnet.id
-security_groups = [aws_security_group.web_sg.name]
-key_name      = "my-keypair"  # Replace with your actual AWS keypair name
+  ami                    = "ami-0a8e758f5e873d1c1"
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
-tags = {
-Name = "MyWebServer"
-}
+  tags = {
+    Name = "terraform-ec2-eu-west-1"
+  }
 }
