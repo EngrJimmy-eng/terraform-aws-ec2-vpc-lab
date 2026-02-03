@@ -102,11 +102,12 @@ Name = "web_sg"
 
 
 resource "aws_instance" "web" {
-  ami                    = "ami-0a8e758f5e873d1c1"
+  ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = "t3.micro"
-  subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+
+  subnet_id              = aws_subnet.public_subnet.id
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
 
   tags = {
     Name = "terraform-ec2-eu-west-1"
