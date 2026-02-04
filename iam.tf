@@ -20,6 +20,6 @@ resource "aws_iam_role_policy_attachment" "ssm_attach" {
 }
 
 resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "terraform-ec2-ssm-profile-v2"
+  name = "terraform-ec2-ssm-profile-v3"
   role = aws_iam_role.ssm_role.name
 }
