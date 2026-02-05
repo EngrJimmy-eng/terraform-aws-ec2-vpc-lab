@@ -34,6 +34,10 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Terraform Import Existing IAM Instance Profile
+      run: |
+          terraform import aws_iam_instance_profile.ssm_profile terraform-ec2-ssm-profile-v2
+
     # Terraform plan
     - name: Terraform Plan
       run: terraform plan -out=tfplan
