@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ssm_role" {
-  name = "terraform-ec2-ssm-role-v2"
+  name = "terraform-ec2-ssm-role-clean"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
