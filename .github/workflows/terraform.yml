@@ -28,15 +28,21 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.7.5  # or latest stable
+        terraform_version: 1.7.5
 
     # Terraform init
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Import Existing IAM Instance Profile
+    # 🔑 Import existing IAM role (safe if already imported)
+    - name: Import existing IAM role
       run: |
-          terraform import aws_iam_instance_profile.ssm_profile terraform-ec2-ssm-profile-v2
+        terraform import aws_iam_role.ssm_role terraform-ec2-ssm-role-clean || true
+
+    # 🔑 Import existing IAM instance profile (safe if already imported)
+    - name: Import existing IAM instance profile
+      run: |
+        terraform import aws_iam_instance_profile.ssm_profile terraform-ec2-ssm-profile-v2 || true
 
     # Terraform plan
     - name: Terraform Plan
