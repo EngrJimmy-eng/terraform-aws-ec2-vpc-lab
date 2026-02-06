@@ -103,7 +103,7 @@ resource "aws_instance" "web" {
   iam_instance_profile   = "terraform-ec2-ssm-profile-v2" # <- use existing
 
   tags = {
-    Name = "terraform-ec2-eu-west-1"
+    Name = "Ikenna-terraform-ec2"
   }
 }
 
