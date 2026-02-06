@@ -1,3 +1,4 @@
+# IAM Role for EC2 SSM
 resource "aws_iam_role" "ssm_role" {
   name = "terraform-ec2-ssm-role-clean"
 
@@ -11,17 +12,26 @@ resource "aws_iam_role" "ssm_role" {
       Action = "sts:AssumeRole"
     }]
   })
+
+  tags = {
+    ManagedBy = "Terraform"
+    Environment = "dev"
+  }
 }
 
-
+# Attach AmazonSSMManagedInstanceCore policy to the role
 resource "aws_iam_role_policy_attachment" "ssm_attach" {
   role       = aws_iam_role.ssm_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+# IAM Instance Profile for EC2
 resource "aws_iam_instance_profile" "ssm_profile" {
   name = "terraform-ec2-ssm-profile-v2"
   role = aws_iam_role.ssm_role.name
+
+  tags = {
+    ManagedBy = "Terraform"
+    Environment = "dev"
+  }
 }
-
-
